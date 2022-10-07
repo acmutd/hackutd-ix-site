@@ -5,10 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "dev:debug": "NODE_OPTIONS='--inspect' next dev",
-    "build": "next build",
+    "build": "npm run creid && next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "husky install"
+    "prepare": "husky install", 
+    "creid": "tsc scripts/creid.ts && node scripts/creid.js"
   },
   "dependencies": {
     "@ant-design/icons": "^4.7.0",

@@ -1,13 +1,18 @@
-import { firestore } from 'firebase-admin';
-import initializeApi from '../lib/admin/init';
+const admin = require('firebase-admin');
 
 async function main() {
   // do something here
   require('dotenv').config({
     path: './.env.local',
   });
-  initializeApi();
-  const db = firestore();
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.SERVICE_ACCOUNT_PROJECT_ID,
+      clientEmail: process.env.SERVICE_ACCOUNT_CLIENT_EMAIL,
+      privateKey: process.env.SERVICE_ACCOUNT_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    }),
+  });
+  const db = admin.firestore();
 
   const snapshot = await db.collection('/registrations').get();
   const users = [];
