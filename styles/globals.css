@@ -487,7 +487,7 @@ text.Target-root {
 .MuiTableRow-root {
   background-color: transparent !important;
   color: #ffffff !important;
-  text-decoration-color: white;
+  text-decoration-color: black;
 }
 .MuiButton-root, .css-71a9mb-MuiButtonBase-root-MuiIconButton-root{
   color: #ffffff !important;
@@ -495,6 +495,36 @@ text.Target-root {
 .css-xya8j6-MuiButtonBase-root-MuiButton-root {
   border: 1px solid white !important;
 }
+
+.css-yyuo3s-MuiTableCell-root.HeaderCell-cell {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: none;
+  padding: 0;
+  text-align: center;
+  vertical-align: middle;
+  background-color: white;
+}
+.css-19yoqom-MuiTableCell-root.Cell-cell {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: none;
+    border-top-color: currentcolor;
+    border-right-color: currentcolor;
+    border-bottom-color: currentcolor;
+    border-left-color: currentcolor;
+  cursor: pointer;
+  padding: 0;
+  height: 48px;
+  text-align: center;
+  vertical-align: middle;
+  background-color: white !important;
+}
+
 .MuiSelect-nativeInput {
   color: white !important;
 }
