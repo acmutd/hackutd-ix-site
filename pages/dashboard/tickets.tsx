@@ -21,7 +21,6 @@ export default function TicketPage() {
           Authorization: user.token,
         },
       });
-      console.log(data);
       setSubmittedTicket(data);
       setLoading(false);
     }
@@ -30,7 +29,7 @@ export default function TicketPage() {
 
   const submitTicket = async () => {
     try {
-      const { data } = await RequestHelper.post<TicketSubmissionPayload, { msg: string }>(
+      const { data } = await RequestHelper.post<TicketSubmissionPayload, { ticketId: string }>(
         '/api/tickets/submit',
         {
           headers: {
@@ -46,8 +45,7 @@ export default function TicketPage() {
           content: ticketContent,
         },
       );
-
-      alert(data.msg);
+      return data.ticketId;
     } catch (error) {
       console.error(error);
       setError(JSON.stringify(error));
@@ -87,17 +85,43 @@ export default function TicketPage() {
             <div
               className="rounded-2xl accountSection text-center py-3 px-5 m-auto cursor-pointer hover:brightness-150 my-6 sm:my-3"
               onClick={async () => {
-                await submitTicket();
+                try {
+                  const ticketId = await submitTicket();
+                  alert('Ticket submitted');
+                  setSubmittedTicket((prev) => [
+                    ...prev,
+                    {
+                      completed: false,
+                      content: ticketContent,
+                      ticketClaimer: {
+                        id: '',
+                        firstName: '',
+                        lastName: '',
+                      },
+                      ticketCreator: {
+                        id: user.id,
+                        firstName: profile.user.firstName,
+                        lastName: profile.user.lastName,
+                      },
+                      ticketId,
+                    },
+                  ]);
+                  setTicketContent('');
+                } catch (error) {
+                  console.error(error);
+                  alert('Error submitting ticket!');
+                }
               }}
             >
               Submit Ticket
             </div>
+            <h4 className="text-center text-xl">My Submitted Ticket</h4>
             {submittedTicket.length === 0 ? (
-              <h1>No tickets submitted</h1>
+              <h1 className="my-5">No tickets submitted</h1>
             ) : (
-              <div className="w-full">
+              <div className="flex my-3  flex-col gap-y-4 w-full">
                 {submittedTicket.map((ticket) => (
-                  <div key={ticket.content} className="w-1/2 mx-auto border-2 p-3 rounded-lg">
+                  <div key={ticket.ticketId} className="w-1/2 mx-auto border-2 p-3 rounded-lg">
                     <h1>
                       <span className="font-bold">Ticket Content: </span>
                       {ticket.content}

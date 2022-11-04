@@ -1,5 +1,5 @@
 import { firestore } from 'firebase-admin';
-import { NextApiRequest, NextApiHandler, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import initializeApi from '../../../lib/admin/init';
 
 initializeApi();
@@ -7,7 +7,7 @@ const db = firestore();
 const TICKET_COLLECTIONS = '/tickets';
 
 async function handlePostRequest(req: NextApiRequest, res: NextApiResponse) {
-  await db.collection(TICKET_COLLECTIONS).add({
+  const doc = await db.collection(TICKET_COLLECTIONS).add({
     ...req.body,
     ticketClaimer: {
       id: '',
@@ -17,7 +17,7 @@ async function handlePostRequest(req: NextApiRequest, res: NextApiResponse) {
     completed: false,
   });
   return res.json({
-    msg: 'Ticket submission completed',
+    ticketId: doc.id,
   });
 }
 

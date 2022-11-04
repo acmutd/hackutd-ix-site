@@ -15,7 +15,7 @@ export default function ClaimTicketPage() {
 
   useEffect(() => {
     async function getData() {
-      const { data } = await RequestHelper.get<Ticket[]>('/api/tickets/all', {
+      const { data } = await RequestHelper.get<Ticket[]>('/api/tickets/unclaim', {
         headers: {
           Authorization: user.token,
         },
@@ -48,6 +48,11 @@ export default function ClaimTicketPage() {
       );
 
       alert('Ticket claimed');
+      setMyClaimedTickets((prev) => [...prev, { ...unclaimedTickets[ticketIdx] }]);
+      setUnclaimedTickets((prev) => {
+        const claimedTicketId = prev[ticketIdx].ticketId;
+        return prev.filter((ticket) => ticket.ticketId !== claimedTicketId);
+      });
     } catch (error) {
       console.error(error);
       alert('Error claiming tickets');
@@ -70,6 +75,11 @@ export default function ClaimTicketPage() {
       );
 
       alert('Ticket unclaimed');
+      setUnclaimedTickets((prev) => [...prev, { ...myClaimedTickets[ticketIdx] }]);
+      setMyClaimedTickets((prev) => {
+        const unclaimedTicketId = prev[ticketIdx].ticketId;
+        return prev.filter((ticket) => ticket.ticketId !== unclaimedTicketId);
+      });
     } catch (error) {
       console.error(error);
       alert('Error unclaiming tickets');
@@ -92,6 +102,10 @@ export default function ClaimTicketPage() {
       );
 
       alert('Ticket resolved');
+      setMyClaimedTickets((prev) => {
+        const unclaimedTicketId = prev[ticketIdx].ticketId;
+        return prev.filter((ticket) => ticket.ticketId !== unclaimedTicketId);
+      });
     } catch (error) {
       console.error(error);
       alert('Error resolving tickets');
@@ -124,7 +138,7 @@ export default function ClaimTicketPage() {
             unclaimedTickets.map((ticket, idx) => (
               <div
                 key={idx}
-                className="flex items-center justify-between my-2 w-1/2 border-2 p-3 rounded-lg"
+                className="flex my-3 items-center justify-between my-2 w-1/2 border-2 p-3 rounded-lg"
               >
                 <div>
                   <h1>
