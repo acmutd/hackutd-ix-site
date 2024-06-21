@@ -53,6 +53,14 @@ export default function DashboardHeader() {
           >
             Ask a Question
           </NavLink>
+          <NavLink
+            href="/dashboard/tickets"
+            exact={true}
+            addClass="border-b-2 border-white"
+            className="mx-4 sourceSansPro textGradient xl:text-5xl md:text-3xl font-semibold"
+          >
+            Submit Ticket
+          </NavLink>
         </div>
       </header>
       <div className="my-4 md:hidden ">

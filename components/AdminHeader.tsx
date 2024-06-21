@@ -61,6 +61,14 @@ export default function AdminHeader() {
           >
             Users Dashboard
           </NavLink>
+          <NavLink
+            href="/admin/tickets"
+            exact={true}
+            addClass="border-b-2 border-white"
+            className="mx-4 sourceSansPro textGradient 2xl:text-4xl lg:text-3xl md:text-xl font-semibold"
+          >
+            Claim Tickets
+          </NavLink>
           {isAuthorized(user) && (
             <NavLink
               href="/admin/stats"
