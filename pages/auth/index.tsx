@@ -237,13 +237,13 @@ export default function AuthPage() {
                 <div className="text-center">{errorMsg}</div>
                 {/* !change if needed */}
                 {/* Uncomment to allow resend verification email option (users could spam) */}
-                {/* {sendVerification && (
-                    <div className='flex justify-center'>
-                      <button className="underline" onClick={() => sendVerificationEmail()}>
-                        Resend verification
-                      </button>
-                    </div>
-                  )} */}
+                {sendVerification && (
+                  <div className="flex justify-center">
+                    <button className="underline" onClick={() => sendVerificationEmail()}>
+                      Resend verification
+                    </button>
+                  </div>
+                )}
                 <div className="text-center text-white font-bold opacity-50 text-xl">or</div>
                 <button
                   className="submit px-4 py-2 w-full rounded-md shadow-md input my-4 text-lg font-bold hover:shadow-lg hover:brightness-[1.3] text-left flex items-center"
